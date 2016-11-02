@@ -9,7 +9,8 @@ var controller = Botkit.slackbot({
 
 // connect the bot to a stream of messages
 controller.spawn({
-  //token: process.env.ALTCODETOKEN,
+  token: process.env.ALTCODETOKEN,
+  //slack bot token here
 }).startRTM()
 
 
@@ -528,6 +529,10 @@ controller.hears(['^Add$', '^new$'],['mention', 'direct_mention'], function(bot,
     convo.ask('May I know the email IDs of the new attendees, please?',function(response,convo) {
       newAttendeeIDs = response.text.split(" ");
 
+      if(response.text.indexOf(",") > -1){
+        newAttendeeIDs = response.text.split(",");
+      }
+
       getIDOfMeeting(response, convo);
 
       convo.next();
@@ -713,17 +718,19 @@ controller.hears(['^deschedule$', '^cancel$'],['mention', 'direct_mention'], fun
       if(confirmation.toUpperCase() === "YES"){
         cancelMeeting();
         convo.say("Meeting has been cancelled.");
+
       }else{
-        convo.say("Meeting NOT cancelled.");
+        convo.say("Meeting NOT found.");
       }
 
       convo.next();
     })
   };
 
-  var cancelMeeting = function(){
+  var cancelMeeting = function(err, convo){
     //
-
+    if(config["meetings"][meetingID])
+    {
     var cancelval = config["meetings"][meetingID].split("|");
     for(var i = 0 ; i < cancelval.length ; i++){
       cancelval[i] = cancelval[i].trim();
@@ -744,12 +751,25 @@ controller.hears(['^deschedule$', '^cancel$'],['mention', 'direct_mention'], fun
     }
 
     console.log(meetingID);
+    
 
 
     delete config["meetings"][meetingID];
+    
     fs = require('fs');
     var m = JSON.parse(fs.readFileSync('./mock.json').toString());
     fs.writeFile('./mock.json', JSON.stringify(config));
+
+    }
+    else
+    {
+
+      bot.reply(message, "meetingID invalid.");
+
+
+
+    }
+
   };
 
   // start a conversation with the user.
@@ -802,4 +822,3 @@ controller.hears(['^reschedule$'],['mention', 'direct_mention'], function(bot,me
 
   //bot.reply(message, "Let us cancel the meeting.");
 });
-
