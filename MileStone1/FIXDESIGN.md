@@ -1,28 +1,3 @@
-#FIX DESIGN
-
-Team Members:
-
-1. Pranav Firake; ppfirake@ncsu.edu
-2. Ajay Chandra Pendyala; apendya@ncsu.edu
-3. Sohan Kunkerkar; sakunker@ncsu.edu
-4. Gautam Verma; gverma@ncsu.edu
-5. Sunil Narasimhamurthy; snarasi5@ncsu.edu
-
-
-## Actions suggested by Professor
-
-1. Motivate ideal time in the problem statement
-2. Provide a more high-level representation of the architecture.
-3. Provide design patterns used in the project.
-
-## The changes made
-
-1. We have improved the problem statement and included the motivation behind the need for ideal time of meetings.
-2. We've also made changes to the storyboard and the wireframe as suggested by the Professor.
-3. We've provided a more high-level representation of the arhcitecture.
-4. We've added the design patterns used in our project.
-
-
 ### Problem Statement
 
 
